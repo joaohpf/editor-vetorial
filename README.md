@@ -1,28 +1,30 @@
-# Editor de Desenho Vetorial Interativo — POO N3
+# Interactive Vector Drawing Editor — OOP N3
 
-**Disciplina:** Programação Orientada a Objetos 1  
-**Docente:** Prof. Me. Sergio Souza Novak  
-**Universidade de Rio Verde — UniRV | Semestre 2026/1**
+**Author:** João Henrique Porfirio Firmiano
 
----
-
-## Descrição
-
-Editor de formas geométricas 2D interativo desenvolvido em Java 17 + JavaFX 21,
-aplicando os padrões de projeto GoF (State, Prototype, Command/Memento, Composite)
-e separação arquitetural MVC.
+**Course:** Object-Oriented Programming 1  
+**Professor:** Prof. Me. Sergio Souza Novak  
+**Universidade de Rio Verde — UniRV | Semester 2026/1**
 
 ---
 
-## Requisitos
+## Description
 
-- Java 17 LTS ou superior
+Interactive 2D geometric shape editor built with Java 17 + JavaFX 21,
+applying GoF design patterns (State, Prototype, Command/Memento, Composite)
+and an MVC architecture.
+
+---
+
+## Requirements
+
+- Java 17 LTS or higher
 - Apache Maven 3.6+
-- Conexão com a internet na primeira execução (para baixar JavaFX via Maven)
+- Internet connection on the first run (to download JavaFX through Maven)
 
 ---
 
-## Como Executar
+## How to Run
 
 ```bash
 cd editor-vetorial
@@ -31,103 +33,103 @@ mvn javafx:run
 
 ---
 
-## Estrutura de Pacotes
+## Package Structure
 
 ```
 src/main/java/org/example/
-├── Models/           # Modelos geométricos
+├── Models/           # Geometric models
 │   ├── FormaGeometrica.java   (interface — Prototype)
-│   ├── FormaBase.java         (classe abstrata)
+│   ├── FormaBase.java         (abstract class)
 │   ├── Ponto.java
 │   ├── Poligono.java
 │   ├── Circulo.java
-│   ├── Quadrado.java          (vértices calculados automaticamente)
-│   └── Hexagono.java          (vértices calculados automaticamente)
-├── Controller/       # Lógica de controle e ferramentas
+│   ├── Quadrado.java          (vertices calculated automatically)
+│   └── Hexagono.java          (vertices calculated automatically)
+├── Controller/       # Control logic and tools
 │   ├── Ferramenta.java              (interface — State)
 │   ├── ModoFerramenta.java          (enum)
-│   ├── EditorContext.java           (contexto do State Pattern)
+│   ├── EditorContext.java           (State Pattern context)
 │   ├── HistoricoController.java     (Memento/Undo-Redo)
 │   ├── FerramentaDesenhar.java
 │   ├── FerramentaSelecionar.java
 │   ├── FerramentaTransformar.java
 │   ├── FerramentaInserirForma.java
 │   └── FerramentaEditarVertice.java
-├── Views/            # Interface gráfica JavaFX
-│   ├── ContainerApp.java      (Application principal)
+├── Views/            # JavaFX graphical interface
+│   ├── ContainerApp.java      (main Application)
 │   ├── BarraLateralView.java
 │   └── PainelStatusView.java
 └── Persistence/
-    └── PersistenciaXML.java   (salvar/carregar em XML)
+    └── PersistenciaXML.java   (save/load as XML)
 ```
 
 ---
 
-## Padrões de Projeto Implementados
+## Design Patterns Implemented
 
 ### State Pattern
-- `EditorContext` gerencia a ferramenta ativa (estado).
-- `Ferramenta` (interface) expõe `aoPressionarMouse`, `aoArrastarMouse`, `aoSoltarMouse`, `aoClicar`.
-- Estados concretos: `FerramentaDesenhar`, `FerramentaSelecionar`, `FerramentaTransformar`,
+- `EditorContext` manages the active tool (state).
+- `Ferramenta` (interface) exposes `aoPressionarMouse`, `aoArrastarMouse`, `aoSoltarMouse`, `aoClicar`.
+- Concrete states: `FerramentaDesenhar`, `FerramentaSelecionar`, `FerramentaTransformar`,
   `FerramentaInserirForma`, `FerramentaEditarVertice`.
 
 ### Command + Memento (Undo/Redo)
-- `HistoricoController` mantém pilhas `undoStack` e `redoStack`.
-- `registrarEstado` salva cópias profundas via `clonar()` antes de cada mutação.
-- `desfazer` (Ctrl+Z) e `refazer` (Ctrl+Y) restauram estados anteriores.
+- `HistoricoController` keeps `undoStack` and `redoStack`.
+- `registrarEstado` saves deep copies through `clonar()` before each change.
+- `desfazer` (Ctrl+Z) and `refazer` (Ctrl+Y) restore previous states.
 
 ### Prototype
-- `FormaGeometrica.clonar()` implementado em `Poligono`, `Circulo`, `Quadrado`, `Hexagono`.
-- Garante duplicação sem compartilhamento de referências em memória.
+- `FormaGeometrica.clonar()` is implemented in `Poligono`, `Circulo`, `Quadrado`, `Hexagono`.
+- Ensures duplication without shared references in memory.
 
 ### Composite
-- `groupId` comum agrupa formas logicamente.
-- Translação e transformações aplicadas a todo o grupo de uma vez.
+- A shared `groupId` groups shapes logically.
+- Translation and transformations are applied to the whole group at once.
 
 ---
 
-## Funcionalidades
+## Features
 
-### Ferramentas
-| Atalho | Ferramenta |
-|--------|------------|
-| Barra lateral | Linha Livre (polígono por cliques, duplo-clique fecha) |
-| Barra lateral | Selecionar (clique/arrastar caixa) |
-| Barra lateral | Editar Vértice (arrastar pontos individuais) |
-| Barra lateral | Transladar / Escalar / Rotacionar / Cisalhar |
-| Barra lateral | Inserir Quadrado / Círculo / Hexágono (pressionar e arrastar) |
-| Delete | Excluir seleção |
-| Ctrl+Z / Ctrl+Y | Desfazer / Refazer |
-| Ctrl+D | Duplicar seleção |
-| Ctrl+S | Salvar (XML) |
-| Ctrl+O | Abrir (XML) |
-| F | Fechar polígono em construção |
-| Escape | Cancelar operação / limpar seleção |
+### Tools
+| Shortcut | Tool |
+|----------|------|
+| Sidebar | Free Line (polygon by clicks, double-click closes it) |
+| Sidebar | Select (click / drag a box) |
+| Sidebar | Edit Vertex (drag individual points) |
+| Sidebar | Translate / Scale / Rotate / Shear |
+| Sidebar | Insert Square / Circle / Hexagon (press and drag) |
+| Delete | Delete selection |
+| Ctrl+Z / Ctrl+Y | Undo / Redo |
+| Ctrl+D | Duplicate selection |
+| Ctrl+S | Save (XML) |
+| Ctrl+O | Open (XML) |
+| F | Close the polygon being drawn |
+| Escape | Cancel operation / clear selection |
 
-### Validações Geométricas
-- **Polígono**: mínimo 3 pontos para ser adicionado ao canvas.
-- **Círculo**: raio estritamente positivo (r > 0); lança `IllegalArgumentException`.
-- **Quadrado/Hexágono**: vértices calculados automaticamente a partir do centro e raio.
-- **Área**: Fórmula de Gauss (Shoelace) para polígonos; π·r² para círculos.
-- **Perímetro**: Soma de distâncias euclidianas; 2π·r para círculos.
+### Geometric Validations
+- **Polygon**: at least 3 points to be added to the canvas.
+- **Circle**: strictly positive radius (r > 0); throws `IllegalArgumentException`.
+- **Square/Hexagon**: vertices calculated automatically from the center and radius.
+- **Area**: Gauss (Shoelace) formula for polygons; π·r² for circles.
+- **Perimeter**: sum of Euclidean distances; 2π·r for circles.
 
-### Transformações Geométricas
-- **Translação**: desloca dx, dy em cada ponto.
-- **Escala**: multiplica distância de cada ponto ao centroide pelo fator.
-- **Rotação**: rotaciona pontos em torno do centroide por ângulo em radianos.
-- **Cisalhamento**: aplica fator shx/shy a cada coordenada.
+### Geometric Transformations
+- **Translation**: moves each point by dx, dy.
+- **Scale**: multiplies each point's distance to the centroid by the factor.
+- **Rotation**: rotates points around the centroid by an angle in radians.
+- **Shear**: applies the shx/shy factor to each coordinate.
 
 ### Snap to Grid
-- Grade visual configurável (5–100 px) com arredondamento de coordenadas do cursor.
+- Configurable visual grid (5–100 px) that rounds the cursor coordinates.
 
-### Persistência XML
-- Exporta/importa formas com todos os atributos (cor, borda, espessura, groupId, coordenadas).
-- Tratamento de exceções com alerta gráfico; arquivos corrompidos não interrompem a aplicação.
-- Alerta ao fechar com alterações não salvas.
+### XML Persistence
+- Exports/imports shapes with all attributes (color, border, thickness, groupId, coordinates).
+- Exception handling with a graphical alert; corrupted files do not crash the application.
+- Warning when closing with unsaved changes.
 
 ---
 
-## Encapsulamento
+## Encapsulation
 
-Todos os atributos de `FormaBase` e subclasses são `protected`/`private`,
-com acesso via getters e setters conforme o contrato da interface `FormaGeometrica`.
+All attributes of `FormaBase` and its subclasses are `protected`/`private`,
+accessed through getters and setters as defined by the `FormaGeometrica` interface.
