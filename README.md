@@ -131,14 +131,3 @@ src/main/java/org/example/
 
 Todos os atributos de `FormaBase` e subclasses são `protected`/`private`,
 com acesso via getters e setters conforme o contrato da interface `FormaGeometrica`.
-
----
-
-## Critérios de Avaliação Atendidos
-
-| Critério | Peso | Status |
-|----------|------|--------|
-| Modelagem Geométrica e Validações Matemáticas | 25% | ✅ |
-| Implementação de Padrões (State, Prototype, Memento) | 35% | ✅ |
-| Usabilidade da GUI em JavaFX e Controles do Mouse | 20% | ✅ |
-| Persistência XML e Tratamento de Erros | 20% | ✅ |
