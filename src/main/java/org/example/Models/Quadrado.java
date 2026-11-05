@@ -1,0 +1,45 @@
+package org.example.Models;
+
+public class Quadrado extends FormaBase {
+
+    public Quadrado(Ponto centro, double raio) {
+        // 4 vértices a 45°, 135°, 225°, 315° — raio = distância centro-vértice
+        for (int i = 0; i < 4; i++) {
+            double angulo = Math.PI / 4.0 + i * Math.PI / 2.0;
+            pontos.add(new Ponto(
+                centro.getX() + raio * Math.cos(angulo),
+                centro.getY() + raio * Math.sin(angulo)
+            ));
+        }
+    }
+
+    // Construtor interno para clonar (sem recalcular vértices)
+    private Quadrado() {}
+
+    @Override
+    public boolean contemPonto(double px, double py) {
+        int n = pontos.size();
+        if (n < 3) return false;
+        boolean dentro = false;
+        for (int i = 0, j = n - 1; i < n; j = i++) {
+            double xi = pontos.get(i).getX(), yi = pontos.get(i).getY();
+            double xj = pontos.get(j).getX(), yj = pontos.get(j).getY();
+            if (((yi > py) != (yj > py)) && (px < (xj - xi) * (py - yi) / (yj - yi) + xi))
+                dentro = !dentro;
+        }
+        return dentro;
+    }
+
+    @Override
+    public FormaGeometrica clonar() {
+        Quadrado copia = new Quadrado();
+        copia.pontos = clonarPontos();
+        copiarAtributos(copia);
+        return copia;
+    }
+
+    @Override
+    public String toString() {
+        return "Quadrado[pontos=" + pontos.size() + "]";
+    }
+}

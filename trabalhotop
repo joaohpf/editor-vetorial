@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<EditorVetorial>
+  <Quadrado corBorda="#000000" corPreenchimento="#E699B3" espessuraBorda="1.0">
+    <Ponto x="856.6053390593274" y="400.3553390593274"/>
+    <Ponto x="785.8946609406727" y="400.3553390593274"/>
+    <Ponto x="785.8946609406726" y="329.6446609406726"/>
+    <Ponto x="856.6053390593273" y="329.6446609406726"/>
+  </Quadrado>
+</EditorVetorial>
