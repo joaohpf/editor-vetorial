@@ -16,6 +16,45 @@ and an MVC architecture.
 
 ---
 
+## Problem
+
+The final project (N3) of the Object-Oriented Programming course asked for an interactive 2D vector editor. The hard part was that many tools (draw, select, transform, edit vertices, insert shapes) react to the same mouse events, and the editor also needed undo/redo and saving, without the code turning into one big block of `if/else`.
+
+## Solution
+
+I solved it with design patterns: **State** (each tool is its own class), **Command + Memento** (undo/redo with deep copies), **Prototype** (cloning shapes) and **Composite** (groups of shapes), on top of an MVC structure. **Claude (Anthropic)** was used to organize, document, translate and publish the project on GitHub.
+
+## Technologies
+
+- Java 17 and JavaFX 21
+- Apache Maven
+- XML (save/load drawings)
+- Claude (Anthropic): documentation and publishing
+
+## Demo
+
+Desktop application, with no published demo yet. Run it locally with `mvn javafx:run` (see [How to Run](#how-to-run)).
+
+## Result
+
+- A new tool can be added as a new class, without changing the others.
+- Multi-level undo/redo (Ctrl+Z / Ctrl+Y) for every change.
+- Drawings are saved to and opened from XML, and corrupted files show an alert instead of crashing the app.
+
+## Repository
+
+- **Code:** `src/main/java/org/example/` (see [Package Structure](#package-structure)).
+- **Documentation:** this README, including the [design patterns](#design-patterns-implemented) and [features](#features).
+- **Run:** Java 17+ and Maven 3.6+, then:
+
+```bash
+git clone https://github.com/joaohpf/editor-vetorial.git
+cd editor-vetorial
+mvn javafx:run
+```
+
+---
+
 ## Requirements
 
 - Java 17 LTS or higher
